@@ -1,6 +1,8 @@
 package domain.impl;
 
+import domain.Category;
 import domain.Moved;
+import domain.Priority;
 import domain.Tasks;
 
 public class DailyTask extends Tasks implements Moved {
@@ -15,7 +17,7 @@ public class DailyTask extends Tasks implements Moved {
         this.time = time;
     }
 
-    public DailyTask(String event, String message, String category, int priority, int numberOfDay, String time) {
+    public DailyTask(String event, String message, Category category, Priority priority, int numberOfDay, String time) {
         super(event, message, category, priority);
         this.numberOfDay = numberOfDay - 1; // т.к. в массиве индекс на 1 меньше
         this.time = time;
@@ -51,7 +53,7 @@ public class DailyTask extends Tasks implements Moved {
 
     @Override
     public String toString() {
-        if (getPriority() == 0 || getCategory() == null) {
+        if (getPriority() == null || getCategory() == null) {
             return "Полное описание события:\n" +
                     "Событие - " + getEvent() +
                     "\nДень - " + dayOfWeek[numberOfDay] +

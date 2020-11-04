@@ -1,6 +1,8 @@
 package domain.impl;
 
+import domain.Category;
 import domain.Moved;
+import domain.Priority;
 import domain.Tasks;
 
 public class YearTask extends Tasks implements Moved {
@@ -19,8 +21,8 @@ public class YearTask extends Tasks implements Moved {
         this.deadline = deadline;
     }
 
-    public YearTask(String event, String message, String category,
-                    int priority, int date, int numberOfMonth, int year, String deadline) {
+    public YearTask(String event, String message, Category category,
+                    Priority priority, int date, int numberOfMonth, int year, String deadline) {
         super(event, message, category, priority);
         this.date = date;
         this.numberOfMonth = numberOfMonth - 1;
@@ -63,7 +65,7 @@ public class YearTask extends Tasks implements Moved {
 
     @Override
     public String toString() {
-        if (getPriority() == 0 || getCategory() == null) {
+        if (getPriority() == null || getCategory() == null) {
             return "Полное описание события:\n" +
                     "Событие - " + getEvent() +
                     "\nДата - " + date +
