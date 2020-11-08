@@ -2,30 +2,11 @@ package domain;
 
 public class Tasks<T> {
 
-    /*
-    Вторая реализация:
-Убрать обобщение в классе: public class Task
-Убрать обобщение в id: private int id;
-Делаем конструктор:
-        public <T> Tasks(T obj) {
-        this.intId = Integer.parseInt(obj.toString());
-    }
-
-Делаем геттер и сеттер:
-        public int getIntId() {
-        return intId;
-    }
-
-        public <T> void setIntId(T intId) {
-        this.intId = Integer.parseInt(intId.toString());
-    }
-     */
-
     private String event;
     private String message;
     private Priority priority;
     private Category category;
-    private T intId;
+    public T obj;
 
     public static class Builder {
 
@@ -53,11 +34,6 @@ public class Tasks<T> {
     }
 
     public Tasks() {
-
-    }
-
-    public Tasks(T obj) {
-        this.intId = obj;
     }
 
     public Tasks(String event, String message) {
@@ -71,20 +47,20 @@ public class Tasks<T> {
         this.priority = priority;
     }
 
-    public T getIntId() {
-        return intId;
-    }
-
-    public void setIntId(T intId) {
-        this.intId = intId;
-    }
-
     public String getEvent() {
         return event;
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Priority getPriority() {

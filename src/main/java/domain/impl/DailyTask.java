@@ -8,8 +8,11 @@ import domain.Tasks;
 public class DailyTask extends Tasks implements Moved {
 
     private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
-    int numberOfDay;
+    private int numberOfDay;
     private String time;
+
+    public DailyTask() {
+    }
 
     public DailyTask(String event, String message, int numberOfDay, String time) {
         super(event, message);
@@ -31,6 +34,18 @@ public class DailyTask extends Tasks implements Moved {
         return time;
     }
 
+    public void setDayOfWeek(String[] dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    public void setNumberOfDay(int numberOfDay) {
+        this.numberOfDay = numberOfDay;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     @Override
     public void showInfo() {
         System.out.println(dayOfWeek[numberOfDay] + ", " + time + " - у вас " + getEvent());
@@ -44,7 +59,7 @@ public class DailyTask extends Tasks implements Moved {
     // переводит задачу на следующий день
     @Override
     public void move() {
-        System.out.println("Метод \"move()\" был вызван. Теперь задача перенесена на следующий день.");
+        System.out.println("Теперь задача перенесена еще и на следующий день.");
         numberOfDay++;
         if (numberOfDay == dayOfWeek.length) {
             numberOfDay = 0;
@@ -53,18 +68,12 @@ public class DailyTask extends Tasks implements Moved {
 
     @Override
     public String toString() {
-        if (getPriority() == null || getCategory() == null) {
-            return "Полное описание события:\n" +
-                    "Событие - " + getEvent() +
-                    "\nДень - " + dayOfWeek[numberOfDay] +
-                    "\nВремя - " + time +
-                    "\nНе забудьте: " + getMessage();
-        }
+
         return "Полное описание события:\n" +
                 "Событие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +
-                "\nДень - " + dayOfWeek[numberOfDay] +
+                "\nДень - " + getDayOfWeek() +
                 "\nВремя - " + time +
                 "\nНе забудьте: " + getMessage();
     }

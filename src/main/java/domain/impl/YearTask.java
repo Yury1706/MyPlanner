@@ -13,6 +13,9 @@ public class YearTask extends Tasks implements Moved {
     private int year;
     private String deadline;
 
+    public YearTask() {
+    }
+
     public YearTask(String event, String message, int date, int numberOfMonth, int year, String deadline) {
         super(event, message);
         this.date = date;
@@ -27,6 +30,26 @@ public class YearTask extends Tasks implements Moved {
         this.date = date;
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
+        this.deadline = deadline;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
+    public void setMonths(String[] months) {
+        this.months = months;
+    }
+
+    public void setNumberOfMonth(int numberOfMonth) {
+        this.numberOfMonth = numberOfMonth;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
@@ -59,21 +82,13 @@ public class YearTask extends Tasks implements Moved {
 
     @Override
     public void move() {
-        System.out.println("Метод \"move()\" был вызван. Теперь задача перенесена на следующий год.");
+        System.out.println("Теперь задача перенесена еще и на следующий год.");
         year++;
     }
 
     @Override
     public String toString() {
-        if (getPriority() == null || getCategory() == null) {
-            return "Полное описание события:\n" +
-                    "Событие - " + getEvent() +
-                    "\nДата - " + date +
-                    "\nМесяц - " + months[numberOfMonth] +
-                    "\nГод - " + year +
-                    "\nНе забудьте: " + getMessage() +
-                    "\nКрайний срок исполнения - " + deadline;
-        }
+
         return "Полное описание события:\n" +
                 "Событие - " + getEvent() +
                 "\nКатегория - " + getCategory() +

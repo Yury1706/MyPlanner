@@ -43,9 +43,9 @@ public class TaskDemo {
         Tasks task = builder.build();
         System.out.println(task);
         System.out.println();
-
-        Tasks<String> genTask2 = new Tasks<>("50");
-        System.out.println(genTask2.getIntId());
+//
+//        Tasks<String> genTask2 = new Tasks<>("50");
+//        System.out.println(genTask2.getIntId());
 
         GenTasks<YearTask> genTasks1 = new GenTasks<>(yearTask1);
         YearTask yearTask3 = genTasks1.getObj();
