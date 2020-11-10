@@ -1,29 +1,38 @@
 package domain.impl;
 
 import domain.Category;
-import domain.Moved;
+import domain.Repeated;
 import domain.Priority;
 import domain.Tasks;
 
-public class DailyTask extends Tasks implements Moved {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
+public class DailyTask extends Tasks implements Repeated, Comparable {
+
+    private String type = "Каждодневная";
     private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
     private int numberOfDay;
     private String time;
+    private static List<DailyTask> arrayOfDailyTasks = new ArrayList<>();
 
     public DailyTask() {
+        arrayOfDailyTasks.add(this);
     }
 
     public DailyTask(String event, String message, int numberOfDay, String time) {
         super(event, message);
         this.numberOfDay = numberOfDay - 1;
         this.time = time;
+        arrayOfDailyTasks.add(this);
     }
 
     public DailyTask(String event, String message, Category category, Priority priority, int numberOfDay, String time) {
         super(event, message, category, priority);
         this.numberOfDay = numberOfDay - 1; // т.к. в массиве индекс на 1 меньше
         this.time = time;
+        arrayOfDailyTasks.add(this);
     }
 
     public String getDayOfWeek() {
@@ -46,6 +55,10 @@ public class DailyTask extends Tasks implements Moved {
         this.time = time;
     }
 
+    public static void printList() {
+        arrayOfDailyTasks.forEach(dailyTask -> System.out.println(dailyTask));
+    }
+
     @Override
     public void showInfo() {
         System.out.println(dayOfWeek[numberOfDay] + ", " + time + " - у вас " + getEvent());
@@ -58,7 +71,7 @@ public class DailyTask extends Tasks implements Moved {
 
     // переводит задачу на следующий день
     @Override
-    public void move() {
+    public void repeat() {
         System.out.println("Теперь задача перенесена еще и на следующий день.");
         numberOfDay++;
         if (numberOfDay == dayOfWeek.length) {
@@ -69,8 +82,9 @@ public class DailyTask extends Tasks implements Moved {
     @Override
     public String toString() {
 
-        return "Полное описание события:\n" +
-                "Событие - " + getEvent() +
+        return "\nПолное описание задачи:" +
+                "\nТип задачи - " + type +
+                "\nСобытие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +
                 "\nДень - " + getDayOfWeek() +

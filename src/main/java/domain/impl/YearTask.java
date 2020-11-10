@@ -1,19 +1,26 @@
 package domain.impl;
 
 import domain.Category;
-import domain.Moved;
+import domain.Repeated;
 import domain.Priority;
 import domain.Tasks;
 
-public class YearTask extends Tasks implements Moved {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
+public class YearTask extends Tasks implements Repeated {
+
+    private String type = "Одноразовая";
     private int date;
     private String[] months = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private int numberOfMonth;
     private int year;
     private String deadline;
+    private static List<YearTask> arrayOfYearTasks = new ArrayList<>();
 
     public YearTask() {
+        arrayOfYearTasks.add(this);
     }
 
     public YearTask(String event, String message, int date, int numberOfMonth, int year, String deadline) {
@@ -22,6 +29,7 @@ public class YearTask extends Tasks implements Moved {
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
         this.deadline = deadline;
+        arrayOfYearTasks.add(this);
     }
 
     public YearTask(String event, String message, Category category,
@@ -31,6 +39,7 @@ public class YearTask extends Tasks implements Moved {
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
         this.deadline = deadline;
+        arrayOfYearTasks.add(this);
     }
 
     public void setDate(int date) {
@@ -69,6 +78,10 @@ public class YearTask extends Tasks implements Moved {
         return deadline;
     }
 
+    public static void printList() {
+        arrayOfYearTasks.forEach(yearTask -> System.out.println(yearTask));
+    }
+
     @Override
     public void showInfo() {
         System.out.println(date + "/" + months[numberOfMonth] + "/" + year + " - наступает следующее событие: " + getEvent());
@@ -81,7 +94,7 @@ public class YearTask extends Tasks implements Moved {
     }
 
     @Override
-    public void move() {
+    public void repeat() {
         System.out.println("Теперь задача перенесена еще и на следующий год.");
         year++;
     }
@@ -89,8 +102,9 @@ public class YearTask extends Tasks implements Moved {
     @Override
     public String toString() {
 
-        return "Полное описание события:\n" +
-                "Событие - " + getEvent() +
+        return "\nПолное описание задачи:" +
+                "\nТип задачи - " + type +
+                "\nСобытие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +
                 "\nДата - " + date +

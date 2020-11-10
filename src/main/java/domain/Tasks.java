@@ -1,12 +1,18 @@
 package domain;
 
-public class Tasks<T> {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
+
+public class Tasks<T> implements Comparable<T>{
 
     private String event;
     private String message;
     private Priority priority;
     private Category category;
-    public T obj;
+    private T obj;
+    private static List<Tasks> tasksArrayList = new ArrayList<>();
 
     public static class Builder {
 
@@ -14,7 +20,6 @@ public class Tasks<T> {
         private String message;
         private Priority priority;
         private Category category;
-
         public Builder(String event, String message, Priority priority, Category category) {
             this.event = event;
             this.message = message;
@@ -30,21 +35,35 @@ public class Tasks<T> {
             task.category = this.category;
             return task;
         }
-
     }
 
     public Tasks() {
+        tasksArrayList.add(this);
     }
 
     public Tasks(String event, String message) {
         this.event = event;
         this.message = message;
+        tasksArrayList.add(this);
     }
 
     public Tasks(String event, String message, Category category, Priority priority) {
         this(event, message);
         this.category = category;
         this.priority = priority;
+        tasksArrayList.add(this);
+    }
+
+    public void setObj(T obj) {
+        this.obj = obj;
+    }
+
+    public T getObj() {
+        return obj;
+    }
+
+    public static List<Tasks> getTasksArrayList() {
+        return tasksArrayList;
     }
 
     public String getEvent() {
@@ -79,6 +98,10 @@ public class Tasks<T> {
         this.category = category;
     }
 
+    static void printList() {
+        tasksArrayList.forEach(tasks -> System.out.println(tasks));
+    }
+
     protected void showInfo() {
         System.out.println(event);
     }
@@ -88,10 +111,29 @@ public class Tasks<T> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tasks<?> tasks = (Tasks<?>) o;
+        return event.equals(tasks.event) &&
+                message.equals(tasks.message) &&
+                priority == tasks.priority &&
+                category == tasks.category &&
+                obj.equals(tasks.obj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(event, message, priority, category, obj);
+    }
+
+    @Override
+    public int compareTo(T o) {
+        return 0;
+    }
+
+    @Override
     public String toString() {
-        return "Напоминание: \nСобытие - " + event +
-                ".\nЧто необходимо сделать: " + message + "." +
-                "\nКатегория - " + getCategory() +
-                "\nПриоритет - " + getPriority();
+        return "\n";
     }
 }
