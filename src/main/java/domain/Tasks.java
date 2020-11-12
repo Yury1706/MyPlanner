@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
-public class Tasks<T> implements Comparable<T>{
+public class Tasks<T> implements Comparable<Tasks>{
 
     private String event;
     private String message;
@@ -128,8 +128,8 @@ public class Tasks<T> implements Comparable<T>{
     }
 
     @Override
-    public int compareTo(T o) {
-        return 0;
+    public int compareTo(Tasks o) {
+        return event.compareTo(o.event);
     }
 
     @Override

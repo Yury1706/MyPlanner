@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class DailyTask extends Tasks implements Repeated, Comparable {
+public class DailyTask extends Tasks implements Repeated {
 
     private String type = "Каждодневная";
     private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
@@ -53,6 +53,10 @@ public class DailyTask extends Tasks implements Repeated, Comparable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public static List<DailyTask> getArrayOfDailyTasks() {
+        return arrayOfDailyTasks;
     }
 
     public static void printList() {

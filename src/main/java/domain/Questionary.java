@@ -15,9 +15,8 @@ public class Questionary {
     private int numberOfDay;
     private String priority;
     private String category;
-    private Tasks task;
 
-    public Tasks getUserInfoOfTask() {
+    public void getUserInfoOfTask() {
 
         boolean buildNewTask = true;
 
@@ -42,26 +41,25 @@ public class Questionary {
                 task.setObj(new DailyTask());
                 System.out.print("Укажите событие: ");
                 task.getObj().setEvent(scanner.nextLine());
-                System.out.print("Укажите порядковый номер дня события от 1 до 7: ");
-                task.getObj().setNumberOfDay((scanner.nextInt()) - 1);
-                scanner.nextLine();
-                System.out.print("Укажите время события: ");
-                task.getObj().setTime(scanner.nextLine());
-                System.out.print("Укажите приоритет события(В верхнем регистре) -" +
-                        " \"HIGH\", \"MIDDLE\" или \"LOW\": ");
-                task.getObj().setPriority(Priority.valueOf(scanner.nextLine()));
-                System.out.print("Укажите себе задачу на это событие: ");
-                task.getObj().setMessage(scanner.nextLine());
-                System.out.println("Укажите категорию из списка:\"SPORT\", \"AUTO\", \"WORK\", " +
-                        "\"HOLIDAY\", \"HEALTH\", \"HOME\", \"FINANCE\", \"SHOPPING\"");
-                task.getObj().setCategory(Category.valueOf(scanner.nextLine()));
-                System.out.println(task.getObj().toString());
-                System.out.print("\nХотите чтобы задача была перенесена еще и на следующий день?: \"Да/Нет\" ");
-                String askForMove = scanner.nextLine();
-                if (askForMove.equalsIgnoreCase("да")) {
-                    task.getObj().repeat();
-                }
-                this.task = task;
+//                System.out.print("Укажите порядковый номер дня события от 1 до 7: ");
+//                task.getObj().setNumberOfDay((scanner.nextInt()) - 1);
+//                scanner.nextLine();
+//                System.out.print("Укажите время события: ");
+//                task.getObj().setTime(scanner.nextLine());
+//                System.out.print("Укажите приоритет события(В верхнем регистре) -" +
+//                        " \"HIGH\", \"MIDDLE\" или \"LOW\": ");
+//                task.getObj().setPriority(Priority.valueOf(scanner.nextLine()));
+//                System.out.print("Укажите себе задачу на это событие: ");
+//                task.getObj().setMessage(scanner.nextLine());
+//                System.out.println("Укажите категорию из списка:\"SPORT\", \"AUTO\", \"WORK\", " +
+//                        "\"HOLIDAY\", \"HEALTH\", \"HOME\", \"FINANCE\", \"SHOPPING\"");
+//                task.getObj().setCategory(Category.valueOf(scanner.nextLine()));
+//                System.out.println(task.getObj().toString());
+//                System.out.print("\nХотите чтобы задача была перенесена еще и на следующий день?: \"Да/Нет\" ");
+//                String askForMove = scanner.nextLine();
+//                if (askForMove.equalsIgnoreCase("да")) {
+//                    task.getObj().repeat();
+//                }
                 System.out.print("Хотите внести еще одну задачу?: \"Да/Нет\" ");
                 String repeat = scanner.nextLine();
                 if (repeat.equalsIgnoreCase("да")) {
@@ -72,29 +70,28 @@ public class Questionary {
                 task.setObj(new YearTask());
                 System.out.print("Укажите событие: ");
                 task.getObj().setEvent(scanner.nextLine());
-                System.out.print("Укажите дату(день на календаре): ");
-                task.getObj().setDate(scanner.nextInt());
-                System.out.print("Укажите месяц цифрой: ");
-                task.getObj().setNumberOfMonth((scanner.nextInt() - 1));
-                System.out.print("Укажите год: ");
-                task.getObj().setYear(scanner.nextInt());
-                scanner.nextLine();
-                System.out.print("Укажите deadline: ");
-                task.getObj().setDeadline(scanner.nextLine());
-                System.out.print("Укажите приоритет события - \"HIGH\", \"MIDDLE\" или \"LOW\": ");
-                task.getObj().setPriority(Priority.valueOf(scanner.nextLine()));
-                System.out.println("Укажите категорию из списка:\"SPORT\", \"AUTO\", \"WORK\", " +
-                        "\"HOLIDAY\", \"HEALTH\", \"HOME\", \"FINANCE\", \"SHOPPING\"");
-                task.getObj().setCategory(Category.valueOf(scanner.nextLine()));
-                System.out.print("Укажите себе задачу на это событие: ");
-                task.getObj().setMessage(scanner.nextLine());
-                System.out.println(task.getObj().toString());
-                System.out.print("Хотите чтобы задача была перенесена еще и на следующий год?: \"Да/Нет\" ");
-                String askForMove = scanner.nextLine();
-                if (askForMove.equalsIgnoreCase("да")) {
-                    task.getObj().repeat();
-                }
-                this.task = task;
+//                System.out.print("Укажите дату(день на календаре): ");
+//                task.getObj().setDate(scanner.nextInt());
+//                System.out.print("Укажите месяц цифрой: ");
+//                task.getObj().setNumberOfMonth((scanner.nextInt() - 1));
+//                System.out.print("Укажите год: ");
+//                task.getObj().setYear(scanner.nextInt());
+//                scanner.nextLine();
+//                System.out.print("Укажите deadline: ");
+//                task.getObj().setDeadline(scanner.nextLine());
+//                System.out.print("Укажите приоритет события - \"HIGH\", \"MIDDLE\" или \"LOW\": ");
+//                task.getObj().setPriority(Priority.valueOf(scanner.nextLine()));
+//                System.out.println("Укажите категорию из списка:\"SPORT\", \"AUTO\", \"WORK\", " +
+//                        "\"HOLIDAY\", \"HEALTH\", \"HOME\", \"FINANCE\", \"SHOPPING\"");
+//                task.getObj().setCategory(Category.valueOf(scanner.nextLine()));
+//                System.out.print("Укажите себе задачу на это событие: ");
+//                task.getObj().setMessage(scanner.nextLine());
+//                System.out.println(task.getObj().toString());
+//                System.out.print("Хотите чтобы задача была перенесена еще и на следующий год?: \"Да/Нет\" ");
+//                String askForMove = scanner.nextLine();
+//                if (askForMove.equalsIgnoreCase("да")) {
+//                    task.getObj().repeat();
+//                }
                 System.out.print("Хотите внести еще одну задачу?: \"Да/Нет\" ");
                 String repeat = scanner.nextLine();
                 if (repeat.equalsIgnoreCase("да")) {
@@ -102,7 +99,6 @@ public class Questionary {
                 } else buildNewTask = false;
             }
         }
-        return task;
     }
 
     public void showInfoOfTasks() {
@@ -132,9 +128,7 @@ public class Questionary {
     public void sortTask() {
         System.out.println("\nХотите отсортировать список?" +
                 "\n0. Нет не надо." +
-                "\n1. По событию." +
-                "\n2. По категории." +
-                "\n3. По приоритету.");
+                "\n1. По событию.");
         int value = scanner.nextInt();
         SortInformation.sortListOfTasks(value);
     }
