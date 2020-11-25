@@ -3,13 +3,9 @@ package domain.impl;
 import domain.Category;
 import domain.Repeated;
 import domain.Priority;
-import domain.Tasks;
+import domain.Task;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
-public class YearTask extends Tasks implements Repeated {
+public class YearTask extends Task implements Repeated {
 
     private String type = "Одноразовая";
     private int date;
@@ -17,10 +13,71 @@ public class YearTask extends Tasks implements Repeated {
     private int numberOfMonth;
     private int year;
     private String deadline;
-    private static List<YearTask> arrayOfYearTasks = new ArrayList<>();
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder<T> {
+
+        private YearTask newYearTask;
+
+        public Builder() {
+            newYearTask = new YearTask();
+        }
+
+        public Builder withEvent(String event) {
+            newYearTask.setEvent(event);
+            return this;
+        }
+
+        public Builder withMessage(String message) {
+            newYearTask.setMessage(message);
+            return this;
+        }
+
+        public Builder withPriority(Priority priority) {
+            newYearTask.setPriority(priority);
+            return this;
+        }
+
+        public Builder withCategory(Category category) {
+            newYearTask.setCategory(category);
+            return this;
+        }
+
+        public Builder withId(T id) {
+            newYearTask.setId(id.toString());
+            return this;
+        }
+
+        public Builder withNumberOfMonth(int numberOfMonth) {
+            newYearTask.numberOfMonth = numberOfMonth - 1;
+            return this;
+        }
+
+        public Builder withDate(int date) {
+            newYearTask.date = date;
+            return this;
+        }
+
+        public Builder withYear(int year) {
+            newYearTask.year = year;
+            return this;
+        }
+
+        public Builder withDeadLine(String deadLine) {
+            newYearTask.deadline = deadLine;
+            return this;
+        }
+
+        public YearTask build() {
+            return newYearTask;
+        }
+    }
 
     public YearTask() {
-        arrayOfYearTasks.add(this);
+
     }
 
     public YearTask(String event, String message, int date, int numberOfMonth, int year, String deadline) {
@@ -29,7 +86,6 @@ public class YearTask extends Tasks implements Repeated {
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
         this.deadline = deadline;
-        arrayOfYearTasks.add(this);
     }
 
     public YearTask(String event, String message, Category category,
@@ -39,7 +95,6 @@ public class YearTask extends Tasks implements Repeated {
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
         this.deadline = deadline;
-        arrayOfYearTasks.add(this);
     }
 
     public void setDate(int date) {
@@ -78,8 +133,8 @@ public class YearTask extends Tasks implements Repeated {
         return deadline;
     }
 
-    public static void printList() {
-        arrayOfYearTasks.forEach(yearTask -> System.out.println(yearTask));
+    public int compareTo(YearTask obj) {
+        return getEvent().compareTo(obj.getEvent());
     }
 
     @Override

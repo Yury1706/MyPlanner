@@ -3,36 +3,81 @@ package domain.impl;
 import domain.Category;
 import domain.Repeated;
 import domain.Priority;
-import domain.Tasks;
+import domain.Task;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-
-public class DailyTask extends Tasks implements Repeated {
+public class DailyTask extends Task implements Repeated {
 
     private String type = "Каждодневная";
     private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
     private int numberOfDay;
     private String time;
-    private static List<DailyTask> arrayOfDailyTasks = new ArrayList<>();
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder<T> {
+
+        private DailyTask newTask;
+
+        public Builder() {
+            newTask = new DailyTask();
+        }
+
+        public Builder withEvent(String event) {
+            newTask.setEvent(event);
+            return this;
+        }
+
+        public Builder withMessage(String message) {
+            newTask.setMessage(message);
+            return this;
+        }
+
+        public Builder withPriority(Priority priority) {
+            newTask.setPriority(priority);
+            return this;
+        }
+
+        public Builder withCategory(Category category) {
+            newTask.setCategory(category);
+            return this;
+        }
+
+        public Builder withId(T id) {
+            newTask.setId(id.toString());
+            return this;
+        }
+
+        public Builder withNumberOfDay(int numberOfDay) {
+            newTask.numberOfDay = numberOfDay - 1;
+            return this;
+        }
+
+        public Builder withTime(String time) {
+            newTask.time = time;
+            return this;
+        }
+
+        public DailyTask build() {
+            return newTask;
+        }
+    }
 
     public DailyTask() {
-        arrayOfDailyTasks.add(this);
     }
 
     public DailyTask(String event, String message, int numberOfDay, String time) {
         super(event, message);
         this.numberOfDay = numberOfDay - 1;
         this.time = time;
-        arrayOfDailyTasks.add(this);
     }
 
-    public DailyTask(String event, String message, Category category, Priority priority, int numberOfDay, String time) {
+    public DailyTask(String event, String message, Category category,
+                     Priority priority, int numberOfDay, String time) {
         super(event, message, category, priority);
         this.numberOfDay = numberOfDay - 1; // т.к. в массиве индекс на 1 меньше
         this.time = time;
-        arrayOfDailyTasks.add(this);
     }
 
     public String getDayOfWeek() {
@@ -43,24 +88,16 @@ public class DailyTask extends Tasks implements Repeated {
         return time;
     }
 
-    public void setDayOfWeek(String[] dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
     public void setNumberOfDay(int numberOfDay) {
-        this.numberOfDay = numberOfDay;
+        this.numberOfDay = numberOfDay - 1;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
 
-    public static List<DailyTask> getArrayOfDailyTasks() {
-        return arrayOfDailyTasks;
-    }
-
-    public static void printList() {
-        arrayOfDailyTasks.forEach(dailyTask -> System.out.println(dailyTask));
+    public int compareTo(DailyTask obj) {
+        return getEvent().compareTo(obj.getEvent());
     }
 
     @Override

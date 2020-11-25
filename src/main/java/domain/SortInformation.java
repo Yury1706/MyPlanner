@@ -1,18 +1,11 @@
 package domain;
 
 import java.util.Collections;
-import java.util.Comparator;
+import java.util.Scanner;
 
 public class SortInformation {
 
-    public static void sortListOfTasks(int criterion) {
-
-        switch (criterion) {
-            case 0:
-                break;
-            case 1:
-                    Collections.sort(Tasks.getTasksArrayList());
-                break;
-        }
+    public static void sortListOfTasks() {
+        Collections.sort(BuildingTasksArray.getListOfTasks());
     }
 }
