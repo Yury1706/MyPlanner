@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Scanner;
-
 public class ShowingTasks {
 
     public static void showInfoOfTasks() {

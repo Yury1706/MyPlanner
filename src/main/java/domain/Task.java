@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Task implements Comparable<Task>, Cloneable {
@@ -138,6 +136,7 @@ public class Task implements Comparable<Task>, Cloneable {
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
     @Override
     public String toString() {
         return event;

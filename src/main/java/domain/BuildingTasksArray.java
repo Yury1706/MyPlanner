@@ -1,7 +1,5 @@
 package domain;
 
-import domain.GettingTaskFromUser;
-import domain.Task;
 import domain.impl.DailyTask;
 import domain.impl.YearTask;
 

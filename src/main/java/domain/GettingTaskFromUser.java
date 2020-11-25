@@ -3,8 +3,6 @@ package domain;
 import domain.impl.DailyTask;
 import domain.impl.YearTask;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class GettingTaskFromUser {
@@ -13,17 +11,17 @@ public class GettingTaskFromUser {
 
     public static Task getUserInfoOfTask() {
         Scanner scanner = new Scanner(System.in);
-        boolean isWrong = true;
+        boolean hasNoMistake = true;
 
-        while (isWrong) {
+        while (hasNoMistake) {
             System.out.print("Введите номер задачи: (1) - \"Каждодневная\" , (2) - \"Одноразовая\" : ");
             numberOfTask = scanner.nextInt();
             scanner.nextLine();
             if (numberOfTask == 0 || numberOfTask > 2) {
                 System.out.println("Вы ввели не верное число.");
-                isWrong = true;
+                hasNoMistake = true;
             } else {
-                isWrong = false;
+                hasNoMistake = false;
             }
         }
 
