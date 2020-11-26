@@ -49,7 +49,7 @@ public class DailyTask extends Task implements Repeated {
             return this;
         }
 
-        public Builder withNumberOfDay(int numberOfDay) {
+        public Builder withNumberOfDay (int numberOfDay) {
             newTask.numberOfDay = numberOfDay - 1;
             return this;
         }

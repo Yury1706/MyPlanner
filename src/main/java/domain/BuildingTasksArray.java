@@ -21,39 +21,48 @@ public class BuildingTasksArray {
         boolean buildOneMoreTask = true;
 
         while (buildOneMoreTask) {
-            Task newTask = GettingTaskFromUser.getUserInfoOfTask();
-            listOfTasks.add(newTask);
+            try {
+                Task newTask = GettingTaskFromUser.getUserInfoOfTask();
+                listOfTasks.add(newTask);
 
-            if (newTask instanceof DailyTask) {
-                System.out.print("\nХотите чтобы задача была перенесена еще и на следующий день?: \"Да/Нет\" ");
-                String askForMove = scanner.nextLine();
-                if (askForMove.equalsIgnoreCase("да")) {
-                    try {
-                        DailyTask repeatDailyTask = (DailyTask) newTask.clone();
-                        repeatDailyTask.repeat();
-                        listOfTasks.add(repeatDailyTask);
-                    } catch (CloneNotSupportedException exc) {
-                        exc.printStackTrace();
+                if (newTask instanceof DailyTask) {
+                    System.out.print("\nХотите чтобы задача была перенесена еще и на следующий день?: \"Да/Нет\" ");
+                    String askForMove = scanner.nextLine();
+                    if (askForMove.equalsIgnoreCase("да")) {
+                        try {
+                            DailyTask repeatDailyTask = (DailyTask) newTask.clone();
+                            repeatDailyTask.repeat();
+                            listOfTasks.add(repeatDailyTask);
+                        } catch (CloneNotSupportedException exc) {
+                            System.out.println("Что-то пошло не так... " +
+                                    "Мы почему-то не можем склонировать задачу на следующий день. " +
+                                    "Создайте заново эту задачу на следующий день.");
+                        }
+                    }
+                } else if (newTask instanceof YearTask) {
+                    System.out.print("\nХотите чтобы задача была перенесена еще и на следующий год?: \"Да/Нет\" ");
+                    String askForMove = scanner.nextLine();
+                    if (askForMove.equalsIgnoreCase("да")) {
+                        try {
+                            YearTask repeatYearTask = (YearTask) newTask.clone();
+                            repeatYearTask.repeat();
+                            listOfTasks.add(repeatYearTask);
+                        } catch (CloneNotSupportedException exc) {
+                            System.out.println("Что-то пошло не так... " +
+                                    "Мы почему-то не можем склонировать задачу на следующий день. " +
+                                    "Создайте заново эту задачу на следующий день.");
+                        }
                     }
                 }
-            } else if (newTask instanceof YearTask) {
-                System.out.print("\nХотите чтобы задача была перенесена еще и на следующий год?: \"Да/Нет\" ");
-                String askForMove = scanner.nextLine();
-                if (askForMove.equalsIgnoreCase("да")) {
-                    try {
-                        YearTask repeatYearTask = (YearTask) newTask.clone();
-                        repeatYearTask.repeat();
-                        listOfTasks.add(repeatYearTask);
-                    } catch (CloneNotSupportedException exc) {
-                        exc.printStackTrace();
-                    }
-                }
+            } catch (MyOutOfBoundsException exc) {
+                System.out.println(exc.getMessage());
+            } finally {
+                System.out.print("Хотите внести еще одну задачу?: \"Да/Нет\" ");
+                String repeat = scanner.nextLine();
+                if (repeat.equalsIgnoreCase("да")) {
+                    buildOneMoreTask = true;
+                } else buildOneMoreTask = false;
             }
-            System.out.print("Хотите внести еще одну задачу?: \"Да/Нет\" ");
-            String repeat = scanner.nextLine();
-            if (repeat.equalsIgnoreCase("да")) {
-                buildOneMoreTask = true;
-            } else buildOneMoreTask = false;
         }
     }
 }
