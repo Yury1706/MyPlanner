@@ -5,7 +5,10 @@ import java.util.Objects;
 public class Task implements Comparable<Task>, Cloneable {
 
     private String event;
+    private String type;
+
     private String message;
+
     private Priority priority;
     private Category category;
     private String id;
@@ -46,6 +49,7 @@ public class Task implements Comparable<Task>, Cloneable {
         public Task build() {
             return newTask;
         }
+
     }
 
     public Task() {
@@ -61,6 +65,14 @@ public class Task implements Comparable<Task>, Cloneable {
         this(event, message);
         this.category = category;
         this.priority = priority;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setId(String id) {
@@ -116,16 +128,12 @@ public class Task implements Comparable<Task>, Cloneable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return event.equals(task.event) &&
-                message.equals(task.message) &&
-                priority == task.priority &&
-                category == task.category &&
-                id.equals(task.id);
+        return event.equals(task.event);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(event, message, priority, category, id);
+        return Objects.hash(event);
     }
 
     @Override

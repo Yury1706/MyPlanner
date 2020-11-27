@@ -7,7 +7,6 @@ import domain.Task;
 
 public class YearTask extends Task implements Repeated {
 
-    private String type = "Одноразовая";
     private int date;
     private String[] months = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     private int numberOfMonth;
@@ -77,11 +76,12 @@ public class YearTask extends Task implements Repeated {
     }
 
     public YearTask() {
-
+        setType("Одноразовая");
     }
 
     public YearTask(String event, String message, int date, int numberOfMonth, int year, String deadline) {
         super(event, message);
+        setType("Одноразовая");
         this.date = date;
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
@@ -91,6 +91,7 @@ public class YearTask extends Task implements Repeated {
     public YearTask(String event, String message, Category category,
                     Priority priority, int date, int numberOfMonth, int year, String deadline) {
         super(event, message, category, priority);
+        setType("Одноразовая");
         this.date = date;
         this.numberOfMonth = numberOfMonth - 1;
         this.year = year;
@@ -158,7 +159,7 @@ public class YearTask extends Task implements Repeated {
     public String toString() {
 
         return "\nПолное описание задачи:" +
-                "\nТип задачи - " + type +
+                "\nТип задачи - " + getType() +
                 "\nСобытие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +

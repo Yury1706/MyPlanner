@@ -7,19 +7,17 @@ import domain.Task;
 
 public class DailyTask extends Task implements Repeated {
 
-    private String type = "Каждодневная";
     private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
     private int numberOfDay;
     private String time;
-
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder<T> {
 
-        private DailyTask newTask;
 
+        private DailyTask newTask;
         public Builder() {
             newTask = new DailyTask();
         }
@@ -62,13 +60,15 @@ public class DailyTask extends Task implements Repeated {
         public DailyTask build() {
             return newTask;
         }
-    }
 
+    }
     public DailyTask() {
+        setType("Каждодневная");
     }
 
     public DailyTask(String event, String message, int numberOfDay, String time) {
         super(event, message);
+        setType("Каждодневная");
         this.numberOfDay = numberOfDay - 1;
         this.time = time;
     }
@@ -76,6 +76,7 @@ public class DailyTask extends Task implements Repeated {
     public DailyTask(String event, String message, Category category,
                      Priority priority, int numberOfDay, String time) {
         super(event, message, category, priority);
+        setType("Каждодневная");
         this.numberOfDay = numberOfDay - 1; // т.к. в массиве индекс на 1 меньше
         this.time = time;
     }
@@ -124,7 +125,7 @@ public class DailyTask extends Task implements Repeated {
     public String toString() {
 
         return "\nПолное описание задачи:" +
-                "\nТип задачи - " + type +
+                "\nТип задачи - " + getType() +
                 "\nСобытие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +

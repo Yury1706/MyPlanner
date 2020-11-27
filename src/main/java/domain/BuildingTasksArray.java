@@ -26,7 +26,7 @@ public class BuildingTasksArray {
                 listOfTasks.add(newTask);
 
                 if (newTask instanceof DailyTask) {
-                    System.out.print("\nХотите чтобы задача была перенесена еще и на следующий день?: \"Да/Нет\" ");
+                    System.out.print("Хотите чтобы задача была перенесена еще и на следующий день?: \"Да/Нет\" ");
                     String askForMove = scanner.nextLine();
                     if (askForMove.equalsIgnoreCase("да")) {
                         try {
@@ -40,7 +40,7 @@ public class BuildingTasksArray {
                         }
                     }
                 } else if (newTask instanceof YearTask) {
-                    System.out.print("\nХотите чтобы задача была перенесена еще и на следующий год?: \"Да/Нет\" ");
+                    System.out.print("Хотите чтобы задача была перенесена еще и на следующий год?: \"Да/Нет\" ");
                     String askForMove = scanner.nextLine();
                     if (askForMove.equalsIgnoreCase("да")) {
                         try {
@@ -61,7 +61,10 @@ public class BuildingTasksArray {
                 String repeat = scanner.nextLine();
                 if (repeat.equalsIgnoreCase("да")) {
                     buildOneMoreTask = true;
-                } else buildOneMoreTask = false;
+                } else {
+                    buildOneMoreTask = false;
+                }
+                System.out.println();
             }
         }
     }
