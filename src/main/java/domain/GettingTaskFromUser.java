@@ -2,6 +2,8 @@ package domain;
 
 import domain.impl.DailyTask;
 import domain.impl.YearTask;
+import domain.numsAndExceptions.*;
+import domain.utils.ValidationUtils;
 
 import java.util.Scanner;
 
@@ -20,7 +22,7 @@ public class GettingTaskFromUser {
             numberOfTask = scanner.nextInt();
             scanner.nextLine();
             try {
-                ExceptionMethods.checkUserValue(numberOfTask);
+                ValidationUtils.checkUserValue(numberOfTask);
                 hasNoMistake = false;
             } catch (UserIsWrongException exception) {
                 System.out.println(exception.getMessage());
@@ -39,7 +41,7 @@ public class GettingTaskFromUser {
                 throw new MyOutOfBoundsException("Дня с таким номер не существует");
             }
             buildTask.withNumberOfDay(numberOfDay);
-            System.out.print("Укажите время события: ");
+            System.out.print("Укажите время события в формате \"чч:мм\" : ");
             buildTask.withTime(scanner.nextLine());
             System.out.print("Укажите приоритет события(В верхнем регистре) -" +
                     " \"HIGH\", \"MIDDLE\" или \"LOW\": ");
@@ -55,28 +57,9 @@ public class GettingTaskFromUser {
             YearTask.Builder buildTask = YearTask.builder();
             System.out.print("Укажите событие: ");
             buildTask.withEvent(scanner.nextLine());
-            System.out.print("Укажите год: ");
-            buildTask.withYear(scanner.nextInt());
-            System.out.print("Укажите месяц цифрой: ");
-            int month = scanner.nextInt();
-            if (month < 1 || month > 12) {
-                throw new MyOutOfBoundsException("Месяца с таким значением нет.");
-            }
-            buildTask.withNumberOfMonth(month);
-            int date;
-            while (true) {
-                System.out.print("Укажите дату(день на календаре): ");
-                date = scanner.nextInt();
-                scanner.nextLine();
-                try {
-                    ExceptionMethods.checkDate(month, date);
-                    buildTask.withDate(date);
-                    break;
-                } catch (DateException exc) {
-                    System.out.println(exc.getMessage());
-                }
-            }
-            System.out.print("Укажите deadline: ");
+            System.out.print("Укажите дату в формате \"дд/мм/гг\" : ");
+            buildTask.withDate(scanner.nextLine());
+            System.out.print("Укажите deadline в формате \"дд/мм/гг\" : ");
             buildTask.withDeadLine(scanner.nextLine());
             System.out.print("Укажите приоритет события - \"HIGH\", \"MIDDLE\" или \"LOW\": ");
             buildTask.withPriority(Priority.valueOf(scanner.nextLine()));

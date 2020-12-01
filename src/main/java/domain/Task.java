@@ -1,14 +1,15 @@
 package domain;
 
+import domain.numsAndExceptions.Category;
+import domain.numsAndExceptions.Priority;
+
 import java.util.Objects;
 
 public class Task implements Comparable<Task>, Cloneable {
 
     private String event;
     private String type;
-
     private String message;
-
     private Priority priority;
     private Category category;
     private String id;
@@ -141,7 +142,7 @@ public class Task implements Comparable<Task>, Cloneable {
         return event.compareTo(o.event);
     }
 
-    protected Object clone() throws CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
 

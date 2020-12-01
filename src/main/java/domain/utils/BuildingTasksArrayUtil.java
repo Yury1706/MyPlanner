@@ -1,5 +1,8 @@
-package domain;
+package domain.utils;
 
+import domain.GettingTaskFromUser;
+import domain.numsAndExceptions.MyOutOfBoundsException;
+import domain.Task;
 import domain.impl.DailyTask;
 import domain.impl.YearTask;
 
@@ -7,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BuildingTasksArray {
+public class BuildingTasksArrayUtil {
 
     private static List<Task> listOfTasks = new ArrayList<>();
 
@@ -44,9 +47,9 @@ public class BuildingTasksArray {
                     String askForMove = scanner.nextLine();
                     if (askForMove.equalsIgnoreCase("да")) {
                         try {
-                            YearTask repeatYearTask = (YearTask) newTask.clone();
-                            repeatYearTask.repeat();
-                            listOfTasks.add(repeatYearTask);
+                            YearTask repeatableYearTask = (YearTask) newTask.clone();
+                            repeatableYearTask.repeat();
+                            listOfTasks.add(repeatableYearTask);
                         } catch (CloneNotSupportedException exc) {
                             System.out.println("Что-то пошло не так... " +
                                     "Мы почему-то не можем склонировать задачу на следующий день. " +

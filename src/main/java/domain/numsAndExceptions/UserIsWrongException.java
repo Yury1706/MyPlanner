@@ -1,4 +1,4 @@
-package domain;
+package domain.numsAndExceptions;
 
 public class UserIsWrongException extends Exception{
 

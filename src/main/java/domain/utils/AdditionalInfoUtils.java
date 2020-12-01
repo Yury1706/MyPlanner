@@ -1,9 +1,11 @@
-package domain;
+package domain.utils;
+
+import domain.Task;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class Need {
+public class AdditionalInfoUtils {
 
     public static List<Task> askWhatTasksNeeded() throws NullPointerException {
 
@@ -31,14 +33,14 @@ public class Need {
         }
         switch (userValue) {
             case 1:
-                BuildingTasksArray.getListOfTasks().forEach(System.out::println);
-                return BuildingTasksArray.getListOfTasks();
+                BuildingTasksArrayUtil.getListOfTasks().forEach(System.out::println);
+                return BuildingTasksArrayUtil.getListOfTasks();
             case 2:
-                return SortInformation.sortAllTasksByEventAndPrint();
+                return SortInformationUtils.sortAllTasksByEventAndPrint();
             case 3:
-                return SortInformation.filterListByTypeAndPrint("Каждодневная");
+                return SortInformationUtils.filterListByTypeAndPrint("Каждодневная");
             case 4:
-                return SortInformation.filterListByTypeAndPrint("Одноразовая");
+                return SortInformationUtils.filterListByTypeAndPrint("Одноразовая");
             case 0:
             default:
                 throw new NullPointerException();
@@ -73,12 +75,12 @@ public class Need {
         int userAnswer = scanner.nextInt();
 
         if (userAnswer == (1)) {
-            BuildingTasksArray.getListOfTasks().stream().map(task -> task.getEvent()).forEach(s -> System.out.print(s + " "));
+            BuildingTasksArrayUtil.getListOfTasks().stream().map(task -> task.getEvent()).forEach(s -> System.out.print(s + " "));
         }
     }
 
     public static void checkTheLength(){
-        boolean eventsValueAreMoreThanOneChar = BuildingTasksArray.getListOfTasks().stream()
+        boolean eventsValueAreMoreThanOneChar = BuildingTasksArrayUtil.getListOfTasks().stream()
                 .allMatch(task -> task.getEvent()
                         .length() > 1);
         System.out.println("\nВсе названия событий в списке задач больше 1: " + eventsValueAreMoreThanOneChar);

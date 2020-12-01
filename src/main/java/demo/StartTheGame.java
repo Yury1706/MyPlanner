@@ -1,19 +1,20 @@
 package demo;
 
-import domain.*;
+import domain.utils.AdditionalInfoUtils;
+import domain.utils.BuildingTasksArrayUtil;
 
 public class StartTheGame {
 
     public static void main(String[] args) {
 
-        BuildingTasksArray.startBuilding();
+        BuildingTasksArrayUtil.startBuilding();
         try {
-            Need.askDeleteTheSameTasks(Need.askWhatTasksNeeded());
+            AdditionalInfoUtils.askDeleteTheSameTasks(AdditionalInfoUtils.askWhatTasksNeeded());
         } catch (NullPointerException exc) {
             System.out.println();
         }
-        Need.showAllNamesOfEvents();
-        Need.checkTheLength();
+        AdditionalInfoUtils.showAllNamesOfEvents();
+        AdditionalInfoUtils.checkTheLength();
     }
 }
 

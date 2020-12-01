@@ -1,17 +1,18 @@
 package domain.impl;
 
-import domain.Category;
-import domain.Repeated;
-import domain.Priority;
+import domain.numsAndExceptions.Category;
+import domain.Repeatable;
+import domain.numsAndExceptions.Priority;
 import domain.Task;
 
-public class YearTask extends Task implements Repeated {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-    private int date;
-    private String[] months = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    private int numberOfMonth;
-    private int year;
-    private String deadline;
+public class YearTask extends Task implements Repeatable {
+
+    private LocalDate fullDate;
+    private LocalDate deadline;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public static Builder builder() {
         return new Builder();
@@ -20,6 +21,7 @@ public class YearTask extends Task implements Repeated {
     public static class Builder<T> {
 
         private YearTask newYearTask;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
         public Builder() {
             newYearTask = new YearTask();
@@ -50,23 +52,13 @@ public class YearTask extends Task implements Repeated {
             return this;
         }
 
-        public Builder withNumberOfMonth(int numberOfMonth) {
-            newYearTask.numberOfMonth = numberOfMonth - 1;
-            return this;
-        }
-
-        public Builder withDate(int date) {
-            newYearTask.date = date;
-            return this;
-        }
-
-        public Builder withYear(int year) {
-            newYearTask.year = year;
+        public Builder withDate(String date) {
+            newYearTask.fullDate = LocalDate.parse(date, formatter);
             return this;
         }
 
         public Builder withDeadLine(String deadLine) {
-            newYearTask.deadline = deadLine;
+            newYearTask.deadline = LocalDate.parse(deadLine,formatter);
             return this;
         }
 
@@ -79,58 +71,26 @@ public class YearTask extends Task implements Repeated {
         setType("Одноразовая");
     }
 
-    public YearTask(String event, String message, int date, int numberOfMonth, int year, String deadline) {
+    public YearTask(String event, String message, String date, String deadline) {
         super(event, message);
         setType("Одноразовая");
-        this.date = date;
-        this.numberOfMonth = numberOfMonth - 1;
-        this.year = year;
-        this.deadline = deadline;
+        this.fullDate = LocalDate.parse(date, formatter);
+        this.deadline = LocalDate.parse(deadline, formatter);
     }
 
     public YearTask(String event, String message, Category category,
-                    Priority priority, int date, int numberOfMonth, int year, String deadline) {
+                    Priority priority, String date, String deadline) {
         super(event, message, category, priority);
         setType("Одноразовая");
-        this.date = date;
-        this.numberOfMonth = numberOfMonth - 1;
-        this.year = year;
-        this.deadline = deadline;
-    }
-
-    public void setDate(int date) {
-        this.date = date;
-    }
-
-    public void setMonths(String[] months) {
-        this.months = months;
-    }
-
-    public void setNumberOfMonth(int numberOfMonth) {
-        this.numberOfMonth = numberOfMonth;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+        this.fullDate = LocalDate.parse(date, formatter);
+        this.deadline = LocalDate.parse(deadline, formatter);
     }
 
     public void setDeadline(String deadline) {
-        this.deadline = deadline;
+        this.deadline = LocalDate.parse(deadline, formatter);
     }
 
-    public int getDate() {
-        return date;
-    }
-
-    public String getNumberOfMonth() {
-        return months[numberOfMonth];
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
@@ -140,19 +100,20 @@ public class YearTask extends Task implements Repeated {
 
     @Override
     public void showInfo() {
-        System.out.println(date + "/" + months[numberOfMonth] + "/" + year + " - наступает следующее событие: " + getEvent());
+        System.out.println(fullDate.format(formatter) + " - наступает следующее событие: " + getEvent());
     }
 
     @Override
     public void showMessage() {
-        System.out.println("Не забудьте: " + getMessage() + ".\nКрайний срок исполнения - " + deadline);
+        System.out.println("Не забудьте: " + getMessage() + ".\nКрайний срок исполнения - " + deadline.format(formatter));
         System.out.println("Если хотите оставить напоминание на следующий год, вызовите метод \"move()\".");
     }
 
     @Override
     public void repeat() {
         System.out.println("Теперь задача перенесена еще и на следующий год.");
-        year++;
+        fullDate.plusYears(1);
+        deadline.plusYears(1);
     }
 
     @Override
@@ -163,10 +124,8 @@ public class YearTask extends Task implements Repeated {
                 "\nСобытие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +
-                "\nДата - " + date +
-                "\nМесяц - " + months[numberOfMonth] +
-                "\nГод - " + year +
+                "\nДата - " + fullDate.format(formatter) +
                 "\nНе забудьте: " + getMessage() +
-                "\nКрайний срок исполнения - " + deadline;
+                "\nКрайний срок исполнения - " + deadline.format(formatter);
     }
 }

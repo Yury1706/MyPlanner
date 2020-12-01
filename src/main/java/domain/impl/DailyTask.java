@@ -1,23 +1,28 @@
 package domain.impl;
 
-import domain.Category;
-import domain.Repeated;
-import domain.Priority;
+import domain.numsAndExceptions.Category;
+import domain.Repeatable;
+import domain.numsAndExceptions.Priority;
 import domain.Task;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
-public class DailyTask extends Task implements Repeated {
+public class DailyTask extends Task implements Repeatable {
 
+    private LocalTime time;
     private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
     private int numberOfDay;
-    private String time;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
     public static Builder builder() {
         return new Builder();
     }
 
     public static class Builder<T> {
 
-
         private DailyTask newTask;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
         public Builder() {
             newTask = new DailyTask();
         }
@@ -47,13 +52,14 @@ public class DailyTask extends Task implements Repeated {
             return this;
         }
 
-        public Builder withNumberOfDay (int numberOfDay) {
+        public Builder withNumberOfDay(int numberOfDay) {
             newTask.numberOfDay = numberOfDay - 1;
             return this;
         }
 
         public Builder withTime(String time) {
-            newTask.time = time;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+            newTask.time = LocalTime.parse(time,formatter);
             return this;
         }
 
@@ -62,6 +68,7 @@ public class DailyTask extends Task implements Repeated {
         }
 
     }
+
     public DailyTask() {
         setType("Каждодневная");
     }
@@ -70,22 +77,22 @@ public class DailyTask extends Task implements Repeated {
         super(event, message);
         setType("Каждодневная");
         this.numberOfDay = numberOfDay - 1;
-        this.time = time;
+        this.time = LocalTime.parse(time);
     }
 
     public DailyTask(String event, String message, Category category,
                      Priority priority, int numberOfDay, String time) {
         super(event, message, category, priority);
         setType("Каждодневная");
-        this.numberOfDay = numberOfDay - 1; // т.к. в массиве индекс на 1 меньше
-        this.time = time;
+        this.numberOfDay = numberOfDay - 1;
+        this.time = LocalTime.parse(time);
     }
 
     public String getDayOfWeek() {
         return dayOfWeek[numberOfDay];
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -94,7 +101,7 @@ public class DailyTask extends Task implements Repeated {
     }
 
     public void setTime(String time) {
-        this.time = time;
+        this.time = LocalTime.parse(time);
     }
 
     public int compareTo(DailyTask obj) {
@@ -130,7 +137,7 @@ public class DailyTask extends Task implements Repeated {
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +
                 "\nДень - " + getDayOfWeek() +
-                "\nВремя - " + time +
+                "\nВремя - " + getTime() +
                 "\nНе забудьте: " + getMessage();
     }
 }
