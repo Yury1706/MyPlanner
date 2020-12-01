@@ -52,8 +52,9 @@ public class AdditionalInfoUtils {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nХотите упорядочить список задач(убрать задачи с одинаковыми событиями)?" +
-                "\n1. Нет, не хочу." +
-                "\n2. Да, убрать повторяющиеся задачи.");
+                "\n1. (Нет, не хочу)." +
+                "\n2. (Да, убрать повторяющиеся задачи).");
+        System.out.print("Введите номер: ");
         int userValue = scanner.nextInt();
 
         if (userValue < 1 || userValue > 2) {
@@ -70,16 +71,17 @@ public class AdditionalInfoUtils {
     public static void showAllNamesOfEvents() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\nХотите просмотреть список всех событий задач?" +
-                "\n1. Да." +
-                "\n2. Нет");
+                "\n1. (Нет, не хочу)." +
+                "\n2. (Да, покажи).");
+        System.out.print("Введите номер: ");
         int userAnswer = scanner.nextInt();
 
-        if (userAnswer == (1)) {
-            BuildingTasksArrayUtil.getListOfTasks().stream().map(task -> task.getEvent()).forEach(s -> System.out.print(s + " "));
+        if (userAnswer == (2)) {
+            BuildingTasksArrayUtil.getListOfTasks().stream().map(task -> task.getEvent()).forEach(s -> System.out.println(s));
         }
     }
 
-    public static void checkTheLength(){
+    public static void checkTheLength() {
         boolean eventsValueAreMoreThanOneChar = BuildingTasksArrayUtil.getListOfTasks().stream()
                 .allMatch(task -> task.getEvent()
                         .length() > 1);

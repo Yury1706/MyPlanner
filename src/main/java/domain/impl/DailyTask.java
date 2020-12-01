@@ -4,6 +4,7 @@ import domain.numsAndExceptions.Category;
 import domain.Repeatable;
 import domain.numsAndExceptions.Priority;
 import domain.Task;
+
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
@@ -59,7 +60,7 @@ public class DailyTask extends Task implements Repeatable {
 
         public Builder withTime(String time) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            newTask.time = LocalTime.parse(time,formatter);
+            newTask.time = LocalTime.parse(time, formatter);
             return this;
         }
 
@@ -92,8 +93,8 @@ public class DailyTask extends Task implements Repeatable {
         return dayOfWeek[numberOfDay];
     }
 
-    public LocalTime getTime() {
-        return time;
+    public String getTime() {
+        return time.format(formatter);
     }
 
     public void setNumberOfDay(int numberOfDay) {
@@ -108,9 +109,18 @@ public class DailyTask extends Task implements Repeatable {
         return getEvent().compareTo(obj.getEvent());
     }
 
+/*   хотел чтобы считала часы до события, но тут наверное надо делать LocalDateTime, т.к. если вызвать метод repeat(), то эта
+    функция не видит что день перешел...*/
+
+//    public String showTimeFromNowUntilEvent() {
+//        LocalTime now = LocalTime.now(ZoneId.of("Europe/Moscow"));
+//        long period = now.until(time, ChronoUnit.HOURS);
+//        return String.valueOf(period);
+//    }
+
     @Override
     public void showInfo() {
-        System.out.println(dayOfWeek[numberOfDay] + ", " + time + " - у вас " + getEvent());
+        System.out.println(dayOfWeek[numberOfDay] + ", " + time.format(formatter) + " - у вас " + getEvent());
     }
 
     @Override

@@ -33,9 +33,9 @@ public class BuildingTasksArrayUtil {
                     String askForMove = scanner.nextLine();
                     if (askForMove.equalsIgnoreCase("да")) {
                         try {
-                            DailyTask repeatDailyTask = (DailyTask) newTask.clone();
-                            repeatDailyTask.repeat();
-                            listOfTasks.add(repeatDailyTask);
+                            DailyTask repeatableDailyTask = (DailyTask) newTask.clone();
+                            repeatableDailyTask.repeat();
+                            listOfTasks.add(repeatableDailyTask);
                         } catch (CloneNotSupportedException exc) {
                             System.out.println("Что-то пошло не так... " +
                                     "Мы почему-то не можем склонировать задачу на следующий день. " +

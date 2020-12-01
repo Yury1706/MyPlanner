@@ -6,6 +6,7 @@ import domain.numsAndExceptions.Priority;
 import domain.Task;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class YearTask extends Task implements Repeatable {
@@ -58,7 +59,7 @@ public class YearTask extends Task implements Repeatable {
         }
 
         public Builder withDeadLine(String deadLine) {
-            newYearTask.deadline = LocalDate.parse(deadLine,formatter);
+            newYearTask.deadline = LocalDate.parse(deadLine, formatter);
             return this;
         }
 
@@ -90,12 +91,18 @@ public class YearTask extends Task implements Repeatable {
         this.deadline = LocalDate.parse(deadline, formatter);
     }
 
-    public LocalDate getDeadline() {
-        return deadline;
+    public String getDeadline() {
+        return deadline.format(formatter);
     }
 
     public int compareTo(YearTask obj) {
         return getEvent().compareTo(obj.getEvent());
+    }
+
+    public long showDaysFromTodayUntilDeadline() {
+        LocalDate today = LocalDate.now();
+        Period periodUntilDeadline = today.until(deadline);
+        return periodUntilDeadline.getDays();
     }
 
     @Override
@@ -106,14 +113,13 @@ public class YearTask extends Task implements Repeatable {
     @Override
     public void showMessage() {
         System.out.println("Не забудьте: " + getMessage() + ".\nКрайний срок исполнения - " + deadline.format(formatter));
-        System.out.println("Если хотите оставить напоминание на следующий год, вызовите метод \"move()\".");
     }
 
     @Override
     public void repeat() {
         System.out.println("Теперь задача перенесена еще и на следующий год.");
-        fullDate.plusYears(1);
-        deadline.plusYears(1);
+        fullDate = fullDate.plusYears(1);
+        deadline = deadline.plusYears(1);
     }
 
     @Override
@@ -126,6 +132,7 @@ public class YearTask extends Task implements Repeatable {
                 "\nПриоритет - " + getPriority() +
                 "\nДата - " + fullDate.format(formatter) +
                 "\nНе забудьте: " + getMessage() +
-                "\nКрайний срок исполнения - " + deadline.format(formatter);
+                "\nКрайний срок исполнения - " + deadline.format(formatter) +
+                "\nКоличество дней до DeadLine - " + showDaysFromTodayUntilDeadline();
     }
 }
