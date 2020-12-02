@@ -5,8 +5,8 @@ import domain.Repeatable;
 import domain.numsAndExceptions.Priority;
 import domain.Task;
 
+import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 public class YearTask extends Task implements Repeatable {
@@ -101,8 +101,8 @@ public class YearTask extends Task implements Repeatable {
 
     public long showDaysFromTodayUntilDeadline() {
         LocalDate today = LocalDate.now();
-        Period periodUntilDeadline = today.until(deadline);
-        return periodUntilDeadline.getDays();
+        Duration duration = Duration.between(today.atStartOfDay(), deadline.atStartOfDay());
+        return duration.toDays();
     }
 
     @Override

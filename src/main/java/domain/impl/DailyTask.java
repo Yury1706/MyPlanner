@@ -5,15 +5,16 @@ import domain.Repeatable;
 import domain.numsAndExceptions.Priority;
 import domain.Task;
 
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 
 public class DailyTask extends Task implements Repeatable {
 
+    private static LocalDate today = LocalDate.now();
     private LocalTime time;
-    private String[] dayOfWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
-    private int numberOfDay;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private LocalDate date;
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public static Builder builder() {
         return new Builder();
@@ -22,7 +23,6 @@ public class DailyTask extends Task implements Repeatable {
     public static class Builder<T> {
 
         private DailyTask newTask;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         public Builder() {
             newTask = new DailyTask();
@@ -54,12 +54,32 @@ public class DailyTask extends Task implements Repeatable {
         }
 
         public Builder withNumberOfDay(int numberOfDay) {
-            newTask.numberOfDay = numberOfDay - 1;
-            return this;
+            switch (numberOfDay) {
+                case 1:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.MONDAY));
+                    return this;
+                case 2:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
+                    return this;
+                case 3:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.WEDNESDAY));
+                    return this;
+                case 4:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.THURSDAY));
+                    return this;
+                case 5:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.FRIDAY));
+                    return this;
+                case 6:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
+                    return this;
+                default:
+                    newTask.date = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+                    return this;
+            }
         }
 
         public Builder withTime(String time) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             newTask.time = LocalTime.parse(time, formatter);
             return this;
         }
@@ -67,38 +87,31 @@ public class DailyTask extends Task implements Repeatable {
         public DailyTask build() {
             return newTask;
         }
-
     }
 
     public DailyTask() {
         setType("Каждодневная");
     }
 
-    public DailyTask(String event, String message, int numberOfDay, String time) {
+    public DailyTask(String event, String message, String time) {
         super(event, message);
         setType("Каждодневная");
-        this.numberOfDay = numberOfDay - 1;
         this.time = LocalTime.parse(time);
     }
 
     public DailyTask(String event, String message, Category category,
-                     Priority priority, int numberOfDay, String time) {
+                     Priority priority, String time) {
         super(event, message, category, priority);
         setType("Каждодневная");
-        this.numberOfDay = numberOfDay - 1;
         this.time = LocalTime.parse(time);
     }
 
     public String getDayOfWeek() {
-        return dayOfWeek[numberOfDay];
+        return String.valueOf(date.getDayOfWeek());
     }
 
     public String getTime() {
         return time.format(formatter);
-    }
-
-    public void setNumberOfDay(int numberOfDay) {
-        this.numberOfDay = numberOfDay - 1;
     }
 
     public void setTime(String time) {
@@ -109,18 +122,16 @@ public class DailyTask extends Task implements Repeatable {
         return getEvent().compareTo(obj.getEvent());
     }
 
-/*   хотел чтобы считала часы до события, но тут наверное надо делать LocalDateTime, т.к. если вызвать метод repeat(), то эта
-    функция не видит что день перешел...*/
-
-//    public String showTimeFromNowUntilEvent() {
-//        LocalTime now = LocalTime.now(ZoneId.of("Europe/Moscow"));
-//        long period = now.until(time, ChronoUnit.HOURS);
-//        return String.valueOf(period);
-//    }
+    public String showTimeFromNowUntilEvent() {
+        LocalDateTime now = LocalDateTime.now();
+        Duration duration = Duration.between(now, LocalDateTime.of(date, time));
+        long period = duration.toHours();
+        return String.valueOf(period);
+    }
 
     @Override
     public void showInfo() {
-        System.out.println(dayOfWeek[numberOfDay] + ", " + time.format(formatter) + " - у вас " + getEvent());
+        System.out.println(date.getDayOfWeek() + ", " + time.format(formatter) + " - у вас " + getEvent());
     }
 
     @Override
@@ -132,10 +143,7 @@ public class DailyTask extends Task implements Repeatable {
     @Override
     public void repeat() {
         System.out.println("Теперь задача перенесена еще и на следующий день.");
-        numberOfDay++;
-        if (numberOfDay == dayOfWeek.length) {
-            numberOfDay = 0;
-        }
+        date = date.plusDays(1);
     }
 
     @Override
@@ -146,8 +154,9 @@ public class DailyTask extends Task implements Repeatable {
                 "\nСобытие - " + getEvent() +
                 "\nКатегория - " + getCategory() +
                 "\nПриоритет - " + getPriority() +
-                "\nДень - " + getDayOfWeek() +
-                "\nВремя - " + getTime() +
-                "\nНе забудьте: " + getMessage();
+                "\nДень - " + date.getDayOfWeek() +
+                "\nВремя - " + time.format(formatter) +
+                "\nНе забудьте: " + getMessage() +
+                "\nОсталось часов: " + showTimeFromNowUntilEvent();
     }
 }
