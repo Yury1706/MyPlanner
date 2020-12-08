@@ -3,9 +3,10 @@ package domain;
 import domain.numsAndExceptions.Category;
 import domain.numsAndExceptions.Priority;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Task implements Comparable<Task>, Cloneable {
+public class Task implements Comparable<Task>, Cloneable, Serializable {
 
     private String event;
     private String type;

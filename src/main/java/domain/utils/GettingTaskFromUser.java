@@ -1,5 +1,6 @@
-package domain;
+package domain.utils;
 
+import domain.Task;
 import domain.impl.DailyTask;
 import domain.impl.YearTask;
 import domain.numsAndExceptions.*;

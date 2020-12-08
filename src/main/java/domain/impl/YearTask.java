@@ -13,7 +13,7 @@ public class YearTask extends Task implements Repeatable {
 
     private LocalDate fullDate;
     private LocalDate deadline;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
     public static Builder builder() {
         return new Builder();
@@ -22,7 +22,6 @@ public class YearTask extends Task implements Repeatable {
     public static class Builder<T> {
 
         private YearTask newYearTask;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
 
         public Builder() {
             newYearTask = new YearTask();
