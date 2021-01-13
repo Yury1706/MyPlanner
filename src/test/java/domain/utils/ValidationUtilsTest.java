@@ -28,10 +28,9 @@ public class ValidationUtilsTest {
     }
 
     @Test(expectedExceptions = UserIsWrongException.class)
-    public void testCheckUserValue() {
+    public void testCheckUserValue() throws UserIsWrongException {
         System.out.println("@Test - testCheckUserValue with exception");
-            ValidationUtils.checkUserValue(5);
-
+        ValidationUtils.checkUserValue(1);
     }
 
 }

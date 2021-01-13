@@ -32,4 +32,24 @@ public class DailyTaskTest {
         ds.setTime("10:00");
         Assert.assertEquals("10:00", ds.getTime());
     }
+
+    @Test(dataProvider = "testBuildTasksByBuilder")
+    public void testBuildingTask(String event, String message, String time, int day, String dayOfWeek) {
+        DailyTask.Builder builder = DailyTask.builder();
+        DailyTask dailyTask = builder.withEvent(event).withMessage(message).withTime(time).withNumberOfDay(day).build();
+        System.out.println(dailyTask);
+        Assert.assertEquals(dailyTask.getEvent(), event);
+        Assert.assertEquals(dailyTask.getMessage(), message);
+        Assert.assertEquals(dailyTask.getTime(), time);
+        Assert.assertEquals(dailyTask.getDayOfWeek(), dayOfWeek);
+    }
+
+    @DataProvider(name = "testBuildTasksByBuilder")
+    public Object[][] listOfValues() {
+        return new Object[][]{
+                {"Homework", "Send my homework to teacher", "10:00", 5, "FRIDAY"},
+                {"Football", "Score a goal", "20:00", 7, "SUNDAY"},
+                {"My birthday", "Send a invitations for my guests", "15:00", 2, "TUESDAY"}
+        };
+    }
 }
